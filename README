@@ -1,0 +1,103 @@
+Erin Yilmaz and Gustavo Curioso
+eyilma02 and gcurio01
+UM Homework 6 README
+
+Acknowledgements: Ryan Polhemus helped us debug our program and gave advice
+                  on unit testing our instructions and architecture.
+
+What has been correctly implemented: To the best of our knowledge, all parts of
+                                     the assignment have been implemented as
+                                     specified in the spec. We created a
+                                     program that is an emulator, enabling the
+                                     user to run UM instructions on our machine
+                                     hardware.
+
+Significant departures from design: We changed our design in one major way
+                                    since the design doc submission. We had
+                                    initially planned to have our main memory
+                                    sequence store pointers to segments, which
+                                    were arrays created with malloc, but we
+                                    changed our program so that our sequence
+                                    stores pointers to structs. These structs
+                                    have a member that is a pointer to the
+                                    segment and an integer that stores the
+                                    number of words in that segment.
+
+Architecture description:
+    Data Structures:
+        Our UM hardware is represented by 3 main components: Main memory,
+        reusable memory and the registers. Our main memory is represented by a
+        Hanson Sequence of pointers to Segment structs. Each Segment struct
+        contains a pointer to a uint32_t array (which represents the segment)
+        and a uint32_t which stores the length of the array in 32-bit words.
+        Our reusable memory is represented by a Hanson Stack, with each element
+        pointing to a uint32_t ID of an unmapped segment. Our registers are
+        represented by an array that holds 8 uint32_t values.
+
+    Modules:
+        Our UM program is separated into 3 main modules: main, um and
+        instructions. Our main module is a client of the um module, and it is
+        responsible for opening and reading in from the provided file, calling
+        memory initializing functions, calling an execute function, and calling
+        a free all memory function once the execution has stopped. Our um module
+        contains the functions for memory management and program execution. The
+        um module defines the data structures of the UM and is the only module
+        aware of secrets associated to UM hardware representation. The um module
+        is a client of the instructions module. Our instructions module contains
+        14 functions that implement each of the UM instructions.
+
+
+Time to execute 50 million instructions: Our program takes just over 2
+                                         seconds to execute 50 million
+                                         instructions. We calculated this
+                                         by timing our UM on midmark.um (which
+                                         is 80 million instructions) and then
+                                         multiplying that result by 5/8. Our
+                                         result is 2.075 seconds.
+
+UM unit tests:
+    add.um - Tests the add instruction by outputting the sum of two registers as
+             an ASCII character.
+
+    cmove.um - Tests the conditional move instruction by outputting register
+               values when register C is 0 and when it is not 0.
+
+    halt.um - Tests the halt instruction by calling the halt instruction.
+
+    halt-verbose.um - Tests the halt instruction by calling the halt instruction
+                      and then calling output functions which should not be
+                      reached.
+
+    input.um - Tests the input instruction by inputting a value into a register
+               and then outputting that register's contents.
+
+    load-prog.um - Tests the multiply, divide and load program instructions by
+                   outputting the product of two register's contents and the
+                   division of two register's contents. It then loads the halt
+                   instruction into a segment and calls the load program
+                   instruction replacing segment 0 with the halt instruction
+                   segment. There is an output call after the load program which
+                   shouldn't execute. Expected output is just the result of
+                   aforementioned operations.
+
+    map.um - Tests the map instruction by mapping a segment and confirming that
+             the expected identifier was returned.
+
+    nand.um - Tests the bitwise nand instruction by nanding the contents of two
+              registers and outputting the resulting ASCII representation.
+
+    print-six.um - Tests the load value and output instructions by loading and
+                   outputting the digit '6'.
+
+    seg-ld-st.um - Tests the segmented load and segmented store instructions by
+                   loading a value into main memory, then loading it back into
+                   a register, and outputting the contents of said register.
+
+    unmap.um - Tests the unmap instruction by unmapping a segment, then mapping
+               a segment and confirm it reuses the ID from the unmapped segment.
+
+
+Hours spent...
+    1) Analyzing the problem - 3 hours
+    2) Preparing our design - 2 hours
+    3) Solving the problem - 18 hours
