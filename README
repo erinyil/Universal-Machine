@@ -1,27 +1,8 @@
 Erin Yilmaz and Gustavo Curioso
-eyilma02 and gcurio01
-UM Homework 6 README
+UM README
 
-Acknowledgements: Ryan Polhemus helped us debug our program and gave advice
-                  on unit testing our instructions and architecture.
+Project Purpose: Create a program that is an emulator, enabling the user to run UM instructions on our AMD-64 machine hardware.
 
-What has been correctly implemented: To the best of our knowledge, all parts of
-                                     the assignment have been implemented as
-                                     specified in the spec. We created a
-                                     program that is an emulator, enabling the
-                                     user to run UM instructions on our machine
-                                     hardware.
-
-Significant departures from design: We changed our design in one major way
-                                    since the design doc submission. We had
-                                    initially planned to have our main memory
-                                    sequence store pointers to segments, which
-                                    were arrays created with malloc, but we
-                                    changed our program so that our sequence
-                                    stores pointers to structs. These structs
-                                    have a member that is a pointer to the
-                                    segment and an integer that stores the
-                                    number of words in that segment.
 
 Architecture description:
     Data Structures:
@@ -96,8 +77,3 @@ UM unit tests:
     unmap.um - Tests the unmap instruction by unmapping a segment, then mapping
                a segment and confirm it reuses the ID from the unmapped segment.
 
-
-Hours spent...
-    1) Analyzing the problem - 3 hours
-    2) Preparing our design - 2 hours
-    3) Solving the problem - 18 hours
